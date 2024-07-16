@@ -28,6 +28,7 @@
         <div id="oauth">
         </div>
         <button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button>
+        <button class="btn btn-default" id="deauthorize">Deauthorize</button>
       </div>
     </div>
 
@@ -132,6 +133,19 @@
                 access_token: access_token,
                 refresh_token: refresh_token
               });
+            });
+          }, false);
+
+          document.getElementById('deauthorize').addEventListener('click', function() {
+            $.ajax({
+              url: '/deauthorize',
+              data: {
+                'refresh_token': refresh_token
+              }
+            }).done(function(data) {
+              console.log(data);
+              $('#login').show();
+              $('#loggedin').hide();
             });
           }, false);
         }

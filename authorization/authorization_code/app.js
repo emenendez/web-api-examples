@@ -51,6 +51,25 @@ app.get('/login', function(req, res) {
     }));
 });
 
+app.get('/deauthorize', function(req, res) {
+  var authOptions = {
+    url: 'https://accounts.spotify.com/oauth2/revoke/v1',
+    form: {
+      token: req.query.refresh_token,
+      token_type_hint: 'refresh_token'
+    },
+    headers: {
+      'content-type': 'application/x-www-form-urlencoded',
+      Authorization: 'Basic ' + (new Buffer.from(client_id + ':' + client_secret).toString('base64'))
+    },
+    json: true
+  };
+
+  request.post(authOptions, function(error, response, body) {
+    res.send({});
+  });
+});
+
 app.get('/callback', function(req, res) {
 
   // your application requests refresh and access tokens
